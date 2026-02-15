@@ -63,7 +63,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
+			<plugin>d
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
