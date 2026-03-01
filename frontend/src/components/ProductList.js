@@ -13,7 +13,7 @@ const ProductList = () => {
     const fetchProducts = () => {
         getAllProducts()
             .then(response => {
-                setProducts(response.data);
+                setProducts(Array.isArray(response.data) ? response.data : response.data.content || []);
             })
             .catch(error => {
                 console.error("Error fetching products:", error);
