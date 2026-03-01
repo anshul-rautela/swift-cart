@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "https://swift-cart-qy1f.vercel.app"})
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
