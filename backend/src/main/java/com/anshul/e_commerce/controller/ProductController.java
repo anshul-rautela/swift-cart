@@ -38,4 +38,9 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
+    @GetMapping("/health")
+    public String health() {
+        return "Backend is running!";
+    }
+
 }
