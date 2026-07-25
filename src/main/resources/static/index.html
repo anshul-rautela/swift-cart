@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA LUXE | Next-Gen E-Commerce Experience</title>
+    <meta name="description" content="Discover premium technology, audio, and luxury lifestyle products with seamless checkout and instant payment simulation.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Canvas background particle blur effect -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo" id="brand-logo-btn">
+                <div class="logo-icon"><i class="fa-solid fa-gem"></i></div>
+                <span class="logo-text">AURA<span class="logo-accent">LUXE</span></span>
+            </a>
+
+            <div class="search-bar-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search premium audio, smart gear, lifestyle..." autocomplete="off">
+                <button class="clear-search-btn" id="clear-search" hidden><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="nav-btn" id="my-orders-btn">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <span>Orders</span>
+                </button>
+
+                <button class="cart-trigger-btn" id="cart-toggle-btn">
+                    <div class="cart-icon-wrapper">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="cart-badge" id="cart-badge-count">0</span>
+                    </div>
+                    <span class="cart-total-text" id="cart-nav-total">$0.00</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Hero Banner -->
+        <section class="hero-section">
+            <div class="hero-card">
+                <div class="hero-badge"><i class="fa-solid fa-bolt"></i> Summer Luxe Collection 2026</div>
+                <h1 class="hero-title">Redefine Your Everyday Tech & Style</h1>
+                <p class="hero-subtitle">Immerse yourself in precision audio, smart wearables, and minimalist home design. Get 20% off with promo code <span class="code-tag">AURA20</span>.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="hero-shop-btn"><i class="fa-solid fa-compass"></i> Explore Catalog</button>
+                    <button class="btn btn-glass" id="apply-promo-hero-btn"><i class="fa-solid fa-tag"></i> Claim 20% Discount</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category & Filter Controls Bar -->
+        <section class="catalog-header-bar">
+            <div class="category-pills" id="category-pills-container">
+                <button class="pill-btn active" data-category="ALL"><i class="fa-solid fa-border-all"></i> All Products</button>
+                <!-- Dynamic categories loaded via JS -->
+            </div>
+
+            <div class="filter-controls">
+                <div class="sort-selector">
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                    <select id="sort-select">
+                        <option value="featured">Featured First</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                        <option value="newest">Newest Arrivals</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid Section -->
+        <section class="products-section">
+            <div class="products-status-header">
+                <div class="result-count" id="product-count-label">Showing all products</div>
+                <div class="active-filter-tags" id="active-tags-container"></div>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <!-- Skeleton Loading Cards -->
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Shopping Cart Drawer -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <div class="cart-header-title">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <h3>Shopping Bag</h3>
+                <span class="cart-item-count" id="cart-drawer-count">(0)</span>
+            </div>
+            <button class="close-btn" id="close-cart-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-body" id="cart-items-container">
+            <!-- Empty state or Cart items dynamically rendered -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="promo-box">
+                <div class="input-group">
+                    <input type="text" id="promo-input" placeholder="Promo code (e.g. AURA20)" uppercase>
+                    <button class="btn-secondary" id="apply-promo-btn">Apply</button>
+                </div>
+                <div class="promo-feedback" id="promo-message"></div>
+            </div>
+
+            <div class="cart-summary-breakdown">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row discount-row" id="discount-row" style="display: none;">
+                    <span>Discount (AURA20)</span>
+                    <span id="cart-discount" class="text-success">-$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Est. Tax (5%)</span>
+                    <span id="cart-tax">$0.00</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Grand Total</span>
+                    <span id="cart-grand-total">$0.00</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-block checkout-btn" id="proceed-checkout-btn">
+                <span>Proceed to Checkout</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Product Quick View & Review Modal -->
+    <div class="modal-overlay" id="product-modal-overlay">
+        <div class="modal-card product-detail-modal">
+            <button class="close-modal-btn" id="close-product-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body product-detail-body" id="product-modal-content">
+                <!-- Dynamically populated product details & review section -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout & Payment Simulation Modal -->
+    <div class="modal-overlay" id="checkout-modal-overlay">
+        <div class="modal-card checkout-modal">
+            <button class="close-modal-btn" id="close-checkout-modal"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="checkout-header">
+                <div class="checkout-steps">
+                    <div class="step active" id="step-indicator-1">
+                        <span class="step-num">1</span>
+                        <span class="step-title">Shipping & Contact</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-indicator-2">
+                        <span class="step-num">2</span>
+                        <span class="step-title">Payment Gateway</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-indicator-3">
+                        <span class="step-num">3</span>
+                        <span class="step-title">Confirmation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Step 1: Customer & Shipping Details -->
+                <form id="shipping-form" class="checkout-step-panel active">
+                    <h3 class="panel-title"><i class="fa-solid fa-truck-fast"></i> Shipping Details</h3>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="cust-name">Full Name</label>
+                            <input type="text" id="cust-name" placeholder="Alex Morgan" required value="Alex Morgan">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="cust-email">Email Address</label>
+                            <input type="email" id="cust-email" placeholder="alex.morgan@example.com" required value="alex.morgan@example.com">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="cust-address">Shipping Address</label>
+                            <input type="text" id="cust-address" placeholder="742 Evergreen Terrace" required value="742 Evergreen Terrace">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-city">City</label>
+                            <input type="text" id="cust-city" placeholder="San Francisco" required value="San Francisco">
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-zip">Postal / ZIP Code</label>
+                            <input type="text" id="cust-zip" placeholder="94107" required value="94107">
+                        </div>
+                    </div>
+                    <div class="step-actions">
+                        <button type="button" class="btn btn-primary btn-block" id="to-payment-step-btn">
+                            Continue to Payment <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Step 2: Payment Gateway Simulation -->
+                <div id="payment-step-panel" class="checkout-step-panel">
+                    <h3 class="panel-title"><i class="fa-solid fa-shield-halved"></i> Secure Payment Gateway Simulation</h3>
+                    
+                    <div class="payment-methods-tabs">
+                        <button class="pay-method-btn active" data-method="CREDIT_CARD">
+                            <i class="fa-solid fa-credit-card"></i> Credit / Debit Card
+                        </button>
+                        <button class="pay-method-btn" data-method="UPI">
+                            <i class="fa-solid fa-qrcode"></i> Instant UPI / QR
+                        </button>
+                        <button class="pay-method-btn" data-method="ONE_CLICK">
+                            <i class="fa-solid fa-bolt"></i> 1-Click Fast Sandbox
+                        </button>
+                    </div>
+
+                    <!-- Interactive Virtual Credit Card -->
+                    <div class="credit-card-preview" id="card-preview">
+                        <div class="card-chip"></div>
+                        <div class="card-logo"><i class="fa-solid fa-gem"></i> AURA CARD</div>
+                        <div class="card-number-display" id="card-num-display">•••• •••• •••• 4242</div>
+                        <div class="card-details-display">
+                            <div>
+                                <span class="card-label">CARD HOLDER</span>
+                                <span class="card-val" id="card-holder-display">ALEX MORGAN</span>
+                            </div>
+                            <div>
+                                <span class="card-label">EXPIRES</span>
+                                <span class="card-val" id="card-exp-display">12/28</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="payment-form">
+                        <div id="credit-card-fields" class="form-grid">
+                            <div class="form-group full-width">
+                                <label>Card Number</label>
+                                <input type="text" id="card-number-input" placeholder="4242 4242 4242 4242" maxlength="19" value="4242 4242 4242 4242">
+                            </div>
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" id="card-expiry-input" placeholder="MM/YY" maxlength="5" value="12/28">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV / CVC</label>
+                                <input type="password" id="card-cvv-input" placeholder="123" maxlength="4" value="123">
+                            </div>
+                        </div>
+
+                        <div id="upi-fields" class="upi-box" style="display: none;">
+                            <div class="qr-mock">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </div>
+                            <p class="qr-info">Scan QR code using any UPI App or enter VPA:</p>
+                            <input type="text" class="input-field" placeholder="alex@upi" value="alex@aura">
+                        </div>
+
+                        <div class="checkout-amount-bar">
+                            <span>Total Amount to Pay:</span>
+                            <span class="pay-amount-highlight" id="checkout-pay-amount">$0.00</span>
+                        </div>
+
+                        <div class="step-actions">
+                            <button type="button" class="btn btn-glass" id="back-to-shipping-btn">
+                                <i class="fa-solid fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="btn btn-primary flex-1" id="submit-payment-btn">
+                                <i class="fa-solid fa-lock"></i> Authorize & Pay Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 2 Loading Animation: Processing Gateway -->
+                <div id="payment-loading-panel" class="checkout-step-panel text-center">
+                    <div class="spinner-wrapper">
+                        <div class="aura-spinner"></div>
+                    </div>
+                    <h3 class="processing-title">Processing Payment...</h3>
+                    <p class="processing-desc" id="processing-status-text">Encrypting card details & contacting banking gateway...</p>
+                </div>
+
+                <!-- Step 3: Order Confirmation & Receipt -->
+                <div id="confirmation-step-panel" class="checkout-step-panel">
+                    <div class="success-banner">
+                        <div class="success-icon-badge"><i class="fa-solid fa-check"></i></div>
+                        <h2>Payment Approved & Order Placed!</h2>
+                        <p>Thank you for shopping with AURA LUXE. A receipt has been sent to your email.</p>
+                    </div>
+
+                    <div class="receipt-card" id="order-receipt-content">
+                        <!-- Dynamically filled with order info -->
+                    </div>
+
+                    <div class="step-actions mt-4">
+                        <button type="button" class="btn btn-primary btn-block" id="finish-order-btn">
+                            <i class="fa-solid fa-bag-shopping"></i> Continue Shopping
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Lookup & History Modal -->
+    <div class="modal-overlay" id="orders-modal-overlay">
+        <div class="modal-card orders-modal">
+            <button class="close-modal-btn" id="close-orders-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-box-archive"></i> Your Order History & Status</h2>
+            </div>
+            <div class="modal-body">
+                <div class="order-search-box">
+                    <input type="text" id="lookup-order-input" placeholder="Search by Order ID (e.g. AUR-123456-789)">
+                    <button class="btn btn-primary" id="lookup-order-btn"><i class="fa-solid fa-magnifying-glass"></i> Track</button>
+                </div>
+                <div id="orders-list-container" class="orders-list">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Custom JS -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
