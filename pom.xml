@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ecommerce</groupId>
-    <artifactId>ecommerce-app</artifactId>
+    <groupId>com.codecitech</groupId>
+    <artifactId>codecitech-ecommerce</artifactId>
     <version>1.0.0</version>
-    <name>aura-ecommerce</name>
-    <description>Modern Spring Boot E-Commerce Platform with Hibernate and REST APIs</description>
+    <name>CodecTech E-Commerce Platform</name>
+    <description>Enterprise E-Commerce Platform built for Codec Technologies Internship - Spring Boot, Hibernate, REST APIs & Glassmorphism Web UI</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
